@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ligas Brasileiras Disponíveis - Anymal Widgets</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-card {
+            background: rgba(255,255,255,0.2);
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-card .number {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .stat-card .label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .filters {
+            padding: 2rem;
+            border-bottom: 2px solid #f0f0f0;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.8rem 1rem 0.8rem 3rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .search-box::before {
+            content: "🔍";
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+        }
+
+        .filter-btn {
+            padding: 0.8rem 1.5rem;
+            border: 2px solid #e0e0e0;
+            background: white;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .filter-btn:hover {
+            border-color: #667eea;
+            color: #667eea;
+        }
+
+        .filter-btn.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .leagues-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+            padding: 2rem;
+        }
+
+        .league-card {
+            border: 2px solid #f0f0f0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+            cursor: pointer;
+            background: white;
+        }
+
+        .league-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-color: #667eea;
+        }
+
+        .league-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .league-logo {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            border-radius: 8px;
+            background: #f8f9fa;
+            padding: 0.5rem;
+        }
+
+        .league-info h3 {
+            font-size: 1.1rem;
+            color: #333;
+            margin-bottom: 0.3rem;
+        }
+
+        .league-type {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #e3f2fd;
+            color: #1976d2;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .league-type.cup {
+            background: #fce4ec;
+            color: #c2185b;
+        }
+
+        .league-details {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .detail-row {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .detail-row strong {
+            color: #333;
+            min-width: 80px;
+        }
+
+        .coverage-badges {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .badge {
+            padding: 0.25rem 0.6rem;
+            background: #f0f0f0;
+            border-radius: 5px;
+            font-size: 0.75rem;
+            color: #666;
+        }
+
+        .badge.active {
+            background: #4caf50;
+            color: white;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #999;
+        }
+
+        .no-results h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 4rem;
+            font-size: 1.2rem;
+            color: #666;
+        }
+
+        .widget-id {
+            font-family: 'Courier New', monospace;
+            background: #f8f9fa;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            .leagues-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filters {
+                flex-direction: column;
+            }
+
+            .search-box {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⚽ Ligas Brasileiras Disponíveis</h1>
+            <p>Explore todas as competições de futebol do Brasil disponíveis nos Anymal Widgets</p>
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="number" id="total-leagues">-</div>
+                    <div class="label">Total de Ligas</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number" id="current-leagues">-</div>
+                    <div class="label">Em Andamento</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number" id="league-types">-</div>
+                    <div class="label">Ligas / Copas</div>
+                </div>
+            </div>
+        </header>
+
+        <div class="filters">
+            <div class="search-box">
+                <input type="text" id="search" placeholder="Buscar por nome da liga...">
+            </div>
+            <button class="filter-btn active" data-filter="all">Todas</button>
+            <button class="filter-btn" data-filter="League">Ligas</button>
+            <button class="filter-btn" data-filter="Cup">Copas</button>
+            <button class="filter-btn" data-filter="current">Em Andamento</button>
+        </div>
+
+        <div class="leagues-grid" id="leagues-container">
+            <div class="loading">Carregando ligas...</div>
+        </div>
+    </div>
+
+    <script>
+        let allLeagues = [];
+        let currentFilter = 'all';
+        let searchTerm = '';
+
+        // Carregar dados do JSON
+        async function loadLeagues() {
+            try {
+                const response = await fetch('ids/leagues.json');
+                const data = await response.json();
+                allLeagues = data.response;
+
+                updateStats();
+                renderLeagues();
+            } catch (error) {
+                console.error('Erro ao carregar ligas:', error);
+                document.getElementById('leagues-container').innerHTML =
+                    '<div class="no-results"><h2>Erro ao carregar dados</h2><p>Não foi possível carregar as informações das ligas.</p></div>';
+            }
+        }
+
+        // Atualizar estatísticas
+        function updateStats() {
+            const totalLeagues = allLeagues.length;
+            const currentLeagues = allLeagues.filter(item =>
+                item.seasons && item.seasons[0] && item.seasons[0].current
+            ).length;
+
+            const leagueTypes = allLeagues.reduce((acc, item) => {
+                acc[item.league.type] = (acc[item.league.type] || 0) + 1;
+                return acc;
+            }, {});
+
+            document.getElementById('total-leagues').textContent = totalLeagues;
+            document.getElementById('current-leagues').textContent = currentLeagues;
+            document.getElementById('league-types').textContent =
+                `${leagueTypes.League || 0} / ${leagueTypes.Cup || 0}`;
+        }
+
+        // Renderizar ligas
+        function renderLeagues() {
+            const container = document.getElementById('leagues-container');
+
+            let filtered = allLeagues.filter(item => {
+                // Filtro de tipo
+                if (currentFilter === 'current') {
+                    return item.seasons && item.seasons[0] && item.seasons[0].current;
+                } else if (currentFilter !== 'all') {
+                    return item.league.type === currentFilter;
+                }
+                return true;
+            });
+
+            // Filtro de busca
+            if (searchTerm) {
+                filtered = filtered.filter(item =>
+                    item.league.name.toLowerCase().includes(searchTerm.toLowerCase())
+                );
+            }
+
+            if (filtered.length === 0) {
+                container.innerHTML = '<div class="no-results"><h2>😕 Nenhuma liga encontrada</h2><p>Tente ajustar os filtros ou termo de busca.</p></div>';
+                return;
+            }
+
+            container.innerHTML = filtered.map(item => createLeagueCard(item)).join('');
+        }
+
+        // Criar card de liga
+        function createLeagueCard(item) {
+            const league = item.league;
+            const season = item.seasons && item.seasons[0];
+            const coverage = season ? season.coverage : null;
+            const isCurrent = season ? season.current : false;
+
+            const startDate = season ? new Date(season.start).toLocaleDateString('pt-BR') : 'N/A';
+            const endDate = season ? new Date(season.end).toLocaleDateString('pt-BR') : 'N/A';
+
+            const coverageBadges = coverage ? `
+                ${coverage.fixtures.events ? '<span class="badge active">Eventos</span>' : ''}
+                ${coverage.fixtures.lineups ? '<span class="badge active">Escalações</span>' : ''}
+                ${coverage.standings ? '<span class="badge active">Classificação</span>' : ''}
+                ${coverage.top_scorers ? '<span class="badge active">Artilheiros</span>' : ''}
+            ` : '';
+
+            return `
+                <div class="league-card">
+                    <div class="league-header">
+                        <img src="${league.logo}" alt="${league.name}" class="league-logo" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E⚽%3C/text%3E%3C/svg%3E'">
+                        <div class="league-info">
+                            <h3>${league.name}</h3>
+                            <span class="league-type ${league.type.toLowerCase()}">${league.type === 'League' ? 'Liga' : 'Copa'}</span>
+                            ${isCurrent ? '<span class="league-type" style="background: #4caf50; color: white; margin-left: 0.5rem;">Em Andamento</span>' : ''}
+                        </div>
+                    </div>
+
+                    <div class="league-details">
+                        <div class="detail-row">
+                            <strong>ID:</strong>
+                            <span class="widget-id">${league.id}</span>
+                        </div>
+                        <div class="detail-row">
+                            <strong>Temporada:</strong>
+                            <span>${season ? season.year : 'N/A'}</span>
+                        </div>
+                        <div class="detail-row">
+                            <strong>Período:</strong>
+                            <span>${startDate} - ${endDate}</span>
+                        </div>
+                    </div>
+
+                    ${coverageBadges ? `
+                        <div class="coverage-badges">
+                            ${coverageBadges}
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+        }
+
+        // Event listeners
+        document.getElementById('search').addEventListener('input', (e) => {
+            searchTerm = e.target.value;
+            renderLeagues();
+        });
+
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                currentFilter = e.target.dataset.filter;
+                renderLeagues();
+            });
+        });
+
+        // Carregar dados ao iniciar
+        loadLeagues();
+    </script>
+</body>
+</html>

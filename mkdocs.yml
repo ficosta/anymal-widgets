@@ -1,0 +1,173 @@
+site_name: Anymal Widgets
+site_description: Documentação completa dos Anymal Widgets v3.1 - Exiba dados esportivos dinâmicos em seu website
+site_author: Anymal Widgets
+site_url: https://ficosta.github.io/anymal-widgets/
+
+# Repository
+repo_name: anymal-widgets
+repo_url: https://github.com/ficosta/anymal-widgets
+edit_uri: edit/main/docs/
+
+# Copyright
+copyright: Copyright &copy; 2025 Anymal Widgets
+
+# Configuration
+theme:
+  name: material
+  language: pt-BR
+
+  # Theme features
+  features:
+    - navigation.instant
+    - navigation.instant.prefetch
+    - navigation.instant.progress
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.expand
+    - navigation.path
+    - navigation.indexes
+    - navigation.top
+    - navigation.footer
+    - toc.follow
+    - toc.integrate
+    - search.suggest
+    - search.highlight
+    - search.share
+    - content.tabs.link
+    - content.code.copy
+    - content.code.select
+    - content.code.annotate
+
+  # Color palette
+  palette:
+    # Light mode
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Mudar para modo escuro
+
+    # Dark mode
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Mudar para modo claro
+
+  # Fonts
+  font:
+    text: Roboto
+    code: Roboto Mono
+
+  # Icons
+  icon:
+    repo: fontawesome/brands/github
+    logo: material/widgets
+
+  # Favicon
+  favicon: assets/favicon.png
+
+# Plugins
+plugins:
+  - search:
+      lang: pt
+      separator: '[\s\-,:!=\[\]()"/]+|(?!\b)(?=[A-Z][a-z])|\.(?!\d)|&[lg]t;'
+  - tags
+  - minify:
+      minify_html: true
+      minify_js: true
+      minify_css: true
+
+# Extensions
+markdown_extensions:
+  # Python Markdown
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - toc:
+      permalink: true
+      permalink_title: Link permanente
+      toc_depth: 3
+
+  # Python Markdown Extensions
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+
+# Extra
+extra:
+  version:
+    provider: mike
+    default: latest
+
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/seu-usuario/anymal-widgets
+      name: GitHub
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/anymal-widgets
+      name: Twitter
+
+  analytics:
+    provider: google
+    property: G-XXXXXXXXXX
+
+  consent:
+    title: Consentimento de cookies
+    description: >-
+      Usamos cookies para reconhecer suas visitas repetidas e preferências, bem como
+      para medir a eficácia de nossa documentação e se os usuários encontram o que
+      estão procurando. Com o seu consentimento, você está nos ajudando a melhorar
+      nossa documentação.
+
+# Page tree
+nav:
+  - Início: index.md
+  - Guia de Início:
+      - Introdução: introducao.md
+      - Antes de Começar: antes-de-comecar.md
+      - Configuração: configuracao.md
+  - Widgets:
+      - Widgets Comuns: widgets-comuns.md
+      - Widgets Dedicados: widgets-dedicados.md
+  - Recursos:
+      - Ligas Disponíveis: ligas-disponiveis.md
+
+# Extra CSS
+extra_css:
+  - stylesheets/extra.css
+
+# Extra JavaScript
+extra_javascript:
+  - javascripts/extra.js
