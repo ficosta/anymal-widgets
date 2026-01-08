@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anymal Soccer Widgets</title>
+    <link rel="stylesheet" href="./theme.css">
+    <script type="module" src="../dist/widget.js"></script>
+</head>
+<body>
+    <anymal-widget
+        data-type="config"
+        data-key="Anymal"
+        data-sport="football"
+        data-custom-lang="../src/i18n/ptbr.json"
+        data-theme="anymal"
+    ></anymal-widget>
+
+    <div id="game-widget-container"></div>
+
+    <script>
+        // Lê o ID do jogo da URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const gameId = urlParams.get('id') || '1035098'; // ID padrão se não houver na URL
+
+        // Cria o widget dinamicamente com o ID correto
+        const gameWidget = document.createElement('anymal-widget');
+        gameWidget.setAttribute('data-type', 'game');
+        gameWidget.setAttribute('data-game-id', gameId);
+        gameWidget.setAttribute('data-refresh', '20');
+
+        // Adiciona o widget ao container
+        document.getElementById('game-widget-container').appendChild(gameWidget);
+    </script>
+</body>
+</html>

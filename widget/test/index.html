@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anymal Soccer Widgets - Dashboard</title>
+    <link rel="stylesheet" href="./theme.css">
+    <script type="module" src="../dist/widget.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f4f4f4 0%, #e8e8e8 100%);
+            min-height: 100vh;
+        }
+
+        .dashboard {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            color: #10501A;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            color: #828d97;
+            font-size: 1.1rem;
+        }
+
+        .widgets-nav {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .widget-btn {
+            background: white;
+            border: 2px solid #10501A;
+            padding: 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .widget-btn:hover {
+            background: #10501A;
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(16, 80, 26, 0.3);
+        }
+
+        .widget-btn.active {
+            background: #DA5000;
+            color: white;
+            border-color: #DA5000;
+        }
+
+        .widget-btn-icon {
+            font-size: 2rem;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .widget-btn-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .widget-display {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            min-height: 600px;
+        }
+
+        .widget-container {
+            width: 100%;
+        }
+
+        .empty-state {
+            text-align: center;
+            color: #828d97;
+            padding: 100px 20px;
+        }
+
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <!-- Widget de configuração global -->
+    <anymal-widget
+        data-type="config"
+        data-key="Anymal"
+        data-sport="football"
+        data-custom-lang="../src/i18n/ptbr.json"
+        data-theme="anymal"
+    ></anymal-widget>
+
+    <div class="dashboard">
+        <div class="header">
+            <div class="logo">⚽</div>
+            <h1>Anymal Soccer Widgets</h1>
+            <p class="subtitle">Dashboard de Widgets de Futebol</p>
+        </div>
+
+        <div class="widgets-nav">
+            <a href="standings.html" target="_blank" class="widget-btn">
+                <span class="widget-btn-icon">🏆</span>
+                <span class="widget-btn-title">Classificação</span>
+            </a>
+            <a href="team.html" target="_blank" class="widget-btn">
+                <span class="widget-btn-icon">🛡️</span>
+                <span class="widget-btn-title">Time</span>
+            </a>
+            <a href="player.html" target="_blank" class="widget-btn">
+                <span class="widget-btn-icon">👤</span>
+                <span class="widget-btn-title">Jogador</span>
+            </a>
+            <a href="games.html" target="_blank" class="widget-btn">
+                <span class="widget-btn-icon">📅</span>
+                <span class="widget-btn-title">Jogos</span>
+            </a>
+            <a href="game.html" target="_blank" class="widget-btn">
+                <span class="widget-btn-icon">⚡</span>
+                <span class="widget-btn-title">Partida</span>
+            </a>
+            <a href="h2h.html" target="_blank" class="widget-btn">
+                <span class="widget-btn-icon">⚔️</span>
+                <span class="widget-btn-title">H2H</span>
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>

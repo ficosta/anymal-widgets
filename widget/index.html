@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anymal Widgets - Development</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    h1 {
+      color: #333;
+      margin-bottom: 10px;
+    }
+    .subtitle {
+      color: #666;
+      margin-bottom: 30px;
+    }
+    .widget-section {
+      background: white;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .widget-section h2 {
+      margin-top: 0;
+      color: #10501A;
+      font-size: 18px;
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Anymal Widgets - Development Environment</h1>
+    <p class="subtitle">Multi-Sport Widgets Library</p>
+
+    <div class="widget-section">
+      <h2>Football Widget Example</h2>
+      <anymal-widget
+        data-theme="anymal"
+        data-sport="football"
+        data-league="39"
+        data-date="2024-12-04">
+      </anymal-widget>
+    </div>
+
+    <div class="widget-section">
+      <h2>Basketball Widget Example</h2>
+      <anymal-widget
+        data-theme="dark"
+        data-sport="basketball"
+        data-league="12"
+        data-date="2024-12-04">
+      </anymal-widget>
+    </div>
+
+    <div class="widget-section">
+      <h2>Baseball Widget Example</h2>
+      <anymal-widget
+        data-theme="grey"
+        data-sport="baseball"
+        data-league="1"
+        data-date="2024-12-04">
+      </anymal-widget>
+    </div>
+
+    <div class="widget-section">
+      <h2>Custom Theme Widget</h2>
+      <anymal-widget
+        data-theme="blue"
+        data-sport="football"
+        data-league="140"
+        data-date="2024-12-04">
+      </anymal-widget>
+    </div>
+  </div>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>
