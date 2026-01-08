@@ -14135,7 +14135,7 @@ const Le = Object.freeze(
   }
 
   function transformTextNodes(element) {
-    element.querySelectorAll('.team-name, .league-name').forEach(el => {
+    element.querySelectorAll('.team-name, .league-name, .group-title').forEach(el => {
       // Only modify text nodes, preserve img and other elements
       for (const child of el.childNodes) {
         if (child.nodeType === 3) { // Text node
