@@ -14109,3 +14109,61 @@ const Le = Object.freeze(
       { value: 'Module' },
     ),
   );
+
+// Name Mapping for Brazilian Football
+(function() {
+  let nameMappings = null;
+
+  async function loadMappings() {
+    try {
+      const configWidget = document.querySelector('anymal-widget[data-type="config"]');
+      if (!configWidget) return;
+
+      const customLang = configWidget.getAttribute('data-custom-lang');
+      if (!customLang) return;
+
+      const response = await fetch(customLang);
+      nameMappings = await response.json();
+    } catch (e) {
+      console.warn('Could not load name mappings:', e);
+    }
+  }
+
+  function transformName(text) {
+    if (!nameMappings || !text) return text;
+    return nameMappings[text] || text;
+  }
+
+  function transformTextNodes(element) {
+    element.querySelectorAll('.team-name, .league-name').forEach(el => {
+      // Only modify text nodes, preserve img and other elements
+      for (const child of el.childNodes) {
+        if (child.nodeType === 3) { // Text node
+          const text = child.textContent.trim();
+          if (text) {
+            const transformed = transformName(text);
+            if (transformed !== text) {
+              child.textContent = child.textContent.replace(text, transformed);
+            }
+          }
+        }
+      }
+    });
+  }
+
+  loadMappings().then(() => {
+    document.querySelectorAll('anymal-widget').forEach(transformTextNodes);
+
+    const observer = new MutationObserver(mutations => {
+      for (const mutation of mutations) {
+        for (const node of mutation.addedNodes) {
+          if (node.nodeType === 1) {
+            transformTextNodes(node);
+          }
+        }
+      }
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+  });
+})();

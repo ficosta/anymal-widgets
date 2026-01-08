@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anymal Widgets - Demo</title>
+
+  <!-- Script dos Anymal Widgets (local) -->
+  <script type="module" src="./widget.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+
+    h1 {
+      color: #333;
+      border-bottom: 2px solid #18cfc0;
+      padding-bottom: 10px;
+    }
+
+    h2 {
+      color: #555;
+      margin-top: 30px;
+    }
+
+    section {
+      background: white;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .widget-container {
+      margin: 15px 0;
+    }
+
+    #game-details, #detalhes {
+      margin-top: 20px;
+      min-height: 100px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Anymal Widgets - Demo Page</h1>
+
+  <!-- ==================== FOOTBALL ==================== -->
+  <section>
+    <h2>Football - Jogos de Hoje</h2>
+    <div class="widget-container">
+      <anymal-widget
+        data-type="games"
+        data-country="Brazil"
+        data-refresh="30"
+        data-show-toolbar="true"
+      ></anymal-widget>
+    </div>
+  </section>
+
+  <section>
+    <h2>Football - Brasileirão Série A - Classificação</h2>
+    <div class="widget-container">
+      <anymal-widget
+        data-type="standings"
+        data-league="475"
+        data-season="2026"
+      ></anymal-widget>
+    </div>
+  </section>
+
+  <section>
+    <h2>Football - Brasileirao Serie A (Liga 475)</h2>
+    <div class="grid">
+      <div class="widget-container">
+        <h3>Jogos da Liga</h3>
+        <anymal-widget
+          data-type="league"
+          data-league="475"
+          data-season="2026"
+          data-standings="true"
+          data-refresh="30"
+        ></anymal-widget>
+      </div>
+
+      <div class="widget-container">
+        <h3>Classificacao</h3>
+        <anymal-widget
+          data-type="standings"
+          data-league="475"
+          data-season="2026"
+        ></anymal-widget>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Football - Premier League (Liga 39)</h2>
+    <div class="grid">
+      <div class="widget-container">
+        <h3>Jogos</h3>
+        <anymal-widget
+          data-type="games"
+          data-league="39"
+          data-refresh="30"
+        ></anymal-widget>
+      </div>
+
+      <div class="widget-container">
+        <h3>Classificacao</h3>
+        <anymal-widget
+          data-type="standings"
+          data-league="39"
+        ></anymal-widget>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Football - Lista de Ligas</h2>
+    <div class="widget-container">
+      <anymal-widget
+        data-type="leagues"
+      ></anymal-widget>
+    </div>
+  </section>
+
+  <!-- Container para detalhes do jogo -->
+  <section>
+    <h2>Detalhes do Jogo</h2>
+    <div id="game-details"></div>
+  </section>
+
+  <!-- ==================== FORMULA 1 ==================== -->
+  <section>
+    <h2>Formula 1 - Corridas 2024</h2>
+    <div class="widget-container">
+      <anymal-widget
+        data-type="races"
+        data-sport="f1"
+        data-season="2024"
+        data-rankings="true"
+      ></anymal-widget>
+    </div>
+  </section>
+
+  <!-- ==================== BASKETBALL ==================== -->
+  <section>
+    <h2>Basketball - Jogos</h2>
+    <div class="widget-container">
+      <anymal-widget
+        data-type="games"
+        data-sport="basketball"
+        data-refresh="30"
+      ></anymal-widget>
+    </div>
+  </section>
+
+  <!-- ==================== NBA ==================== -->
+  <section>
+    <h2>NBA - Jogos</h2>
+    <div class="widget-container">
+      <anymal-widget
+        data-type="games"
+        data-sport="nba"
+        data-refresh="30"
+      ></anymal-widget>
+    </div>
+  </section>
+
+  <!-- ==================== MMA ==================== -->
+  <section>
+    <h2>MMA - Lutas</h2>
+    <div class="widget-container">
+      <anymal-widget
+        data-type="fights"
+        data-sport="mma"
+        data-refresh="30"
+      ></anymal-widget>
+    </div>
+  </section>
+
+  <!-- Container para detalhes gerais -->
+  <section>
+    <h2>Detalhes</h2>
+    <div id="detalhes"></div>
+  </section>
+
+  <!-- Widget de Configuracao Global (deve ser incluido apenas uma vez) -->
+  <anymal-widget
+    data-type="config"
+    data-key="Anymal"
+    data-sport="football"
+    data-country="Brazil"
+    data-timezone="America/Sao_Paulo"
+    data-theme="anymal"
+    data-custom-lang="./ptbr.json"
+    data-show-logos="true"
+    data-show-errors="true"
+    data-target-game="#game-details"
+    data-target-team="modal"
+    data-target-player="modal"
+    data-target-standings="#detalhes"
+  ></anymal-widget>
+
+</body>
+</html>
