@@ -14151,14 +14151,54 @@ const Le = Object.freeze(
     });
   }
 
+  function sortStandingsGroups() {
+    document.querySelectorAll('.standings-view').forEach(container => {
+      if (container.dataset.sorted) return; // Already sorted
+
+      const groups = [];
+      let currentGroup = null;
+
+      // Collect groups (title + table pairs)
+      for (const child of [...container.children]) {
+        if (child.classList.contains('group-title')) {
+          currentGroup = { title: child, table: null, text: child.textContent.trim() };
+          groups.push(currentGroup);
+        } else if (child.tagName === 'TABLE' && currentGroup) {
+          currentGroup.table = child;
+        }
+      }
+
+      if (groups.length <= 1) return; // Nothing to sort
+
+      // Sort alphabetically by group title
+      groups.sort((a, b) => a.text.localeCompare(b.text));
+
+      // Reorder DOM
+      groups.forEach(group => {
+        if (group.title) container.appendChild(group.title);
+        if (group.table) container.appendChild(group.table);
+      });
+
+      container.dataset.sorted = 'true';
+    });
+  }
+
+  let sortTimeout = null;
+  function debouncedSort() {
+    if (sortTimeout) clearTimeout(sortTimeout);
+    sortTimeout = setTimeout(sortStandingsGroups, 100);
+  }
+
   loadMappings().then(() => {
     document.querySelectorAll('anymal-widget').forEach(transformTextNodes);
+    debouncedSort();
 
     const observer = new MutationObserver(mutations => {
       for (const mutation of mutations) {
         for (const node of mutation.addedNodes) {
           if (node.nodeType === 1) {
             transformTextNodes(node);
+            debouncedSort();
           }
         }
       }

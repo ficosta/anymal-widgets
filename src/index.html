@@ -83,6 +83,17 @@
   </section>
 
   <section>
+    <h2>Football - Liga 629 - Classificação</h2>
+    <div class="widget-container">
+      <anymal-widget
+        data-type="standings"
+        data-league="629"
+        data-season="2026"
+      ></anymal-widget>
+    </div>
+  </section>
+
+  <section>
     <h2>Football - Brasileirao Serie A (Liga 475)</h2>
     <div class="grid">
       <div class="widget-container">
@@ -199,22 +210,30 @@
     <div id="detalhes"></div>
   </section>
 
-  <!-- Widget de Configuracao Global (deve ser incluido apenas uma vez) -->
-  <anymal-widget
-    data-type="config"
-    data-key="Anymal"
-    data-sport="football"
-    data-country="Brazil"
-    data-timezone="America/Sao_Paulo"
-    data-theme="anymal"
-    data-custom-lang="./ptbr.json"
-    data-show-logos="true"
-    data-show-errors="true"
-    data-target-game="#game-details"
-    data-target-team="modal"
-    data-target-player="modal"
-    data-target-standings="#detalhes"
-  ></anymal-widget>
+  <!-- Widget de Configuracao Global (criado dinamicamente para detectar mobile) -->
+  <div id="anymal-config"></div>
+
+  <script>
+    const mobile = window.innerWidth <= 767;
+    const custom_lang = mobile ? "./ptbr-mobile.json" : "./ptbr.json";
+
+    const configWidget = document.createElement('anymal-widget');
+    configWidget.setAttribute('data-type', 'config');
+    configWidget.setAttribute('data-key', 'Anymal');
+    configWidget.setAttribute('data-sport', 'football');
+    configWidget.setAttribute('data-country', 'Brazil');
+    configWidget.setAttribute('data-timezone', 'America/Sao_Paulo');
+    configWidget.setAttribute('data-theme', 'anymal');
+    configWidget.setAttribute('data-custom-lang', custom_lang);
+    configWidget.setAttribute('data-show-logos', 'true');
+    configWidget.setAttribute('data-show-errors', 'true');
+    configWidget.setAttribute('data-target-game', '#game-details');
+    configWidget.setAttribute('data-target-team', 'modal');
+    configWidget.setAttribute('data-target-player', 'modal');
+    configWidget.setAttribute('data-target-standings', '#detalhes');
+
+    document.getElementById('anymal-config').appendChild(configWidget);
+  </script>
 
 </body>
 </html>
